@@ -8,14 +8,15 @@ from .models import MenuItem, Order, OrderItem
 from .serializers import MenuItemSerializer, OrderItemSerializer
 from .permissions import *
 
-class MenuItemList(generics.ListCreateAPIView):
+class MenuItemList(generics.ListAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
-    permission_classes = [AuthorizedEditDeleteMenuItem]
+
 
 class MenuItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
+    permission_classes = [AuthorizedEditDeleteMenuItem]
 
 
 class OrderList(generics.ListCreateAPIView):
