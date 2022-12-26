@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Restaurant',
     'rest_framework',
+    'rest_framework.authtoken',
+    # 'rest_framework_simplejwt',
     'djoser',
 ]
 
@@ -129,12 +131,13 @@ DJOSER = {
     "USER_ID_FIELD": "username"
 }
 
-RES_FRAMEWORK = {
+REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ]
