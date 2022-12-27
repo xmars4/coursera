@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import MenuItem, Category, OrderItem
+from .models import *
 from django.contrib.auth.models import User, Group
 
 
@@ -27,3 +27,15 @@ class UserSerialier(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
+
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = ['user', 'menuitem', 'quantity', 'unit_price', 'price']
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return Cart.objects.create(**validated_data)
