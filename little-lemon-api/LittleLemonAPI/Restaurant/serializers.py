@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import MenuItem, Category, OrderItem
+from django.contrib.auth.models import User, Group
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -20,3 +21,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = '__all__'
+
+
+class UserSerialier(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
