@@ -18,7 +18,7 @@ class MenuItemList(generics.ListAPIView):
 class MenuItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
-    permission_classes = [AuthorizedEditDeleteMenuItem]
+    permission_classes = [AuthorizedManager]
 
 
 class OrderList(generics.ListCreateAPIView):
@@ -36,6 +36,7 @@ class OrderList(generics.ListCreateAPIView):
 class UserManagerView(generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerialier
+    permission_classes = [AuthorizedManager]
 
     def get(self, request):
         managers = User.objects.all().filter(groups__name='Manager')
@@ -58,6 +59,7 @@ class UserManagerView(generics.GenericAPIView):
 class UserDeliveryCrewView(generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerialier
+    permission_classes = [AuthorizedManager]
 
     def get(self, request):
         managers = User.objects.all().filter(groups__name='Delivery crew')
