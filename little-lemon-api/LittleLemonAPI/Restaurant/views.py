@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
@@ -104,9 +106,10 @@ class CartView(generics.GenericAPIView):
         return Response()
 
 
-class OrderList(generics.ListCreateAPIView):
+class OrderList(generics.GenericAPIView):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         user_id = request.user.id
@@ -114,3 +117,55 @@ class OrderList(generics.ListCreateAPIView):
         order_items = OrderItem.objects.all().filter(order__in=orders)
         serialized_order_items = OrderItemSerializer(order_items, many=True)
         return Response(serialized_order_items.data)
+
+    def post(self, request):
+        user_id = request.user.id
+        current_carts = Cart.objects.all().filter(user__id=user_id)
+        new_order = OrderSerializer(data={
+            'user': user_id,
+            'total': 0,
+            'date': datetime.now().strftime('%Y-%m-%d')
+        })
+        if not new_order.is_valid():
+            return Response(new_order.errors)
+        new_order.save()
+        total = 0
+        for cart in current_carts:
+            total += cart.price
+            new_order_item = OrderItemSerializer(data={
+                'order': new_order.data.get('id'),
+                'menuitem': cart.menuitem.id,
+                'quantity': cart.quantity,
+                'unit_price': cart.unit_price,
+                'price': cart.quantity * cart.unit_price
+            })
+            if not new_order_item.is_valid():
+                return Response(new_order_item.errors)
+            new_order_item.save()
+        # new_order.total = total
+        # new_order.save()
+        current_carts.delete()
+        return Response()
+
+    def delete(self, request, pk=None):
+        if request.user.groups.filter(name='Manager'):
+            order = get_object_or_404(Order, pk=pk)
+            order.delete()
+            return Response()
+        return Response(status=403)
+
+    def put(self, request):
+        pass
+
+class OrderListWithID(generics.GenericAPIView):
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, pk=None):
+        user_id = request.user.id
+        orders = Order.objects.all().filter(pk=pk, user__id=user_id)
+        order_items = OrderItem.objects.all().filter(order__in=orders)
+        serialized_order_items = OrderItemSerializer(order_items, many=True)
+        return Response(serialized_order_items.data)
+
