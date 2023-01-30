@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7c0354ea-85ec-48fe-8bab-cb73610cec6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/littlelemon/littlelemon/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/littlelemon/littlelemon/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/littlelemon/littlelemon/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/littlelemon/littlelemon/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/littlelemon/restaurant/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/littlelemon/restaurant/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +87,7 @@
       <updated>1674026133675</updated>
       <workItem from="1674026134932" duration="140000" />
       <workItem from="1674806635783" duration="4529000" />
-      <workItem from="1675040186548" duration="1248000" />
+      <workItem from="1675040186548" duration="2463000" />
     </task>
     <servers />
   </component>
